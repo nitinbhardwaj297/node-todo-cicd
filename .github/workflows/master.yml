@@ -35,12 +35,9 @@ jobs:
 
     # Step 5: Tag and push Docker image to Amazon ECR
     - name: Tag and push image to Amazon ECR
-      env:
-        AWS_REGION: "us-east-1"  # e.g., us-east-1
-        AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
       run: |
         # Tag the image for ECR
-        docker tag node-master:latest 867344428970.dkr.ecr.us-east-1.amazonaws.com/node-master:latest
+        docker tag node-frontend:latest 867344428970.dkr.ecr.us-east-1.amazonaws.com/node-master:latest
 
         # Push the image to ECR
         docker push 867344428970.dkr.ecr.us-east-1.amazonaws.com/node-master:latest
