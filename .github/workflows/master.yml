@@ -1,22 +1,4 @@
-name: deploy to aws 
-
-on:
-  push:
-    branches:
-      - master
-
-jobs:
-  deploy:
-    runs-on: test-runner
-
-    steps:
-    # Step 1: Checkout the code
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    # Step 2: Set up AWS CLI
-    - name: Set up AWS CLI
-      uses: aws-actions/configure-aws-credentials@v1name: Deploy to AWS
+name: Deploy to AWS
 
 on:
   push:
@@ -51,30 +33,6 @@ jobs:
         docker build -t node-frontend .
 
     # Step 5: Tag and push Docker image to Amazon ECR
-    - name: Tag and push image to Amazon ECR
-      run: |
-        # Tag the image for ECR
-        docker tag node-frontend:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/node-master:latest
-
-        # Push the image to ECR
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/node-master:latest
-
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-
-    # Step 2: Log in to Amazon ECR
-    - name: Log in to Amazon ECR
-      id: ecr-login
-      uses: aws-actions/amazon-ecr-login@v1
-
-    # Step 3: Build Docker image
-    - name: Build Docker image
-      run: |
-        docker build -t node-frontend .
-
-    # Step 4: Tag and push Docker image to Amazon ECR
     - name: Tag and push image to Amazon ECR
       env:
         AWS_REGION: "us-east-1"  # e.g., us-east-1
